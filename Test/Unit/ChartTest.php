@@ -45,5 +45,16 @@ class ChartTest extends BaseTest
                $this->inline($chart->buildXml()));
     }
 
+    /**
+     * @test
+     */
+    public function categories(){
+        $chart = new Chart();
+        $chart->addCategory('Jan');
+        $chart->addCategory('Feb');
+        $this->assertEquals('<?xml version="1.0"?><chart caption="" xAxisName="" yAxisName=""><categories><category label="Jan"></category><category label="Feb"></category></categories></chart>',
+                $this->inline($chart->buildXml()));
+    }
+
 }
 

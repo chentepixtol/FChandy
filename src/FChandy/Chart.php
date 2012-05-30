@@ -26,6 +26,12 @@ class Chart
      *
      * @var array
      */
+    private $categories = array();
+
+    /**
+     *
+     * @var array
+     */
     private $attributes = array();
 
     /**
@@ -36,10 +42,11 @@ class Chart
      * @param array $attributes
      */
     public function __construct($caption = '', $xAxisName = '', $yAxisName = '', array $attributes = array()){
-        $this->attributes['caption'] = $caption;
-        $this->attributes['xAxisName'] = $xAxisName;
-        $this->attributes['yAxisName'] = $yAxisName;
-        $this->attributes = array_merge($this->attributes, $attributes);
+        $this->attributes = array_merge(array(
+            'caption' => $caption,
+            'xAxisName' => $xAxisName,
+            'yAxisName' => $yAxisName,
+        ), $attributes);
     }
 
     /**
@@ -48,10 +55,21 @@ class Chart
      * @param string $label
      * @param array $attributes
      */
-    public function addSet($value, $label = '', $attributes = array()){
+    public function addSet($value, $label = '', array $attributes = array()){
         $this->sets[] = array_merge(array(
             'label' => $label,
             'value' => $value,
+        ), $attributes);
+    }
+
+    /**
+     *
+     * @param string $label
+     * @param array $attributes
+     */
+    public function addCategory($label, array $attributes = array()){
+        $this->categories[] = array_merge(array(
+            'label' => $label,
         ), $attributes);
     }
 
@@ -61,7 +79,7 @@ class Chart
      * @param string $displayvalue
      * @param array $attributes
      */
-    public function addTrendline($startValue, $displayvalue = '', array $attributes){
+    public function addTrendline($startValue, $displayvalue = '', array $attributes = array()){
         $this->trendlines[] = array_merge(array(
             'startValue' => $startValue,
             'displayvalue' => $displayvalue,
@@ -86,6 +104,13 @@ class Chart
 
         foreach ($this->sets as $set){
             $chart->element('set', $set);
+        }
+
+        if( count($this->categories) ){
+            $categories = $chart->element('categories');
+            foreach ($this->categories as $category){
+                $categories->element('category', $category);
+            }
         }
 
         if( count($this->trendlines) ){
