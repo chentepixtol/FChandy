@@ -18,15 +18,21 @@ class Chart
 
     /**
      *
-     * @var unknown_type
+     * @var array
+     */
+    private $trendlines = array();
+
+    /**
+     *
+     * @var array
      */
     private $attributes = array();
 
     /**
      *
-     * @param unknown_type $caption
-     * @param unknown_type $xAxisName
-     * @param unknown_type $yAxisName
+     * @param string $caption
+     * @param string $xAxisName
+     * @param string $yAxisName
      * @param array $attributes
      */
     public function __construct($caption = '', $xAxisName = '', $yAxisName = '', array $attributes = array()){
@@ -36,11 +42,27 @@ class Chart
         $this->attributes = array_merge($this->attributes, $attributes);
     }
 
+    /**
+     *
+     * @param string $value
+     * @param string $label
+     * @param array $attributes
+     */
     public function addSet($value, $label = '', $attributes = array()){
-        $attributes['label'] = $label;
-        $attributes['value'] = $value;
         $this->sets[] = array(
-            'attributes' => $attributes,
+            'attributes' => array_merge(array(
+                'label' => $label,
+                'value' => $value,
+             ), $attributes)
+        );
+    }
+
+    public function addTrendline($startValue, $displayvalue = '', array $attributes){
+        $this->trendlines[] = array(
+            'attributes' => array_merge(array(
+                'startValue' => $startValue,
+                'displayvalue' => $displayvalue,
+             ), $attributes)
         );
     }
 
@@ -62,6 +84,13 @@ class Chart
 
         foreach ($this->sets as $set){
             $chart->element('set', $set['attributes']);
+        }
+
+        if( count($this->trendlines) ){
+            $trendlines = $chart->element('trendLines');
+            foreach ($this->trendlines as $trendline){
+                $trendlines->element('line', $trendline['attributes']);
+            }
         }
 
         return $simpledom;

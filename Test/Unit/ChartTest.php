@@ -35,5 +35,15 @@ class ChartTest extends BaseTest
                 $this->inline($chart->buildXml()));
     }
 
+    /**
+     * @test
+     */
+    public function trendline(){
+       $chart = new Chart();
+       $chart->addTrendline(1000, 'millar', array('color' => 'FF0044'));
+       $this->assertEquals('<?xml version="1.0"?><chart caption="" xAxisName="" yAxisName=""><trendLines><line startValue="1000" displayvalue="millar" color="FF0044"></line></trendLines></chart>',
+               $this->inline($chart->buildXml()));
+    }
+
 }
 
