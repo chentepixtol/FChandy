@@ -49,21 +49,17 @@ class Chart
      * @param array $attributes
      */
     public function addSet($value, $label = '', $attributes = array()){
-        $this->sets[] = array(
-            'attributes' => array_merge(array(
-                'label' => $label,
-                'value' => $value,
-             ), $attributes)
-        );
+        $this->sets[] = array_merge(array(
+            'label' => $label,
+            'value' => $value,
+        ), $attributes);
     }
 
     public function addTrendline($startValue, $displayvalue = '', array $attributes){
-        $this->trendlines[] = array(
-            'attributes' => array_merge(array(
-                'startValue' => $startValue,
-                'displayvalue' => $displayvalue,
-             ), $attributes)
-        );
+        $this->trendlines[] = array_merge(array(
+            'startValue' => $startValue,
+            'displayvalue' => $displayvalue,
+        ), $attributes);
     }
 
     /**
@@ -83,13 +79,13 @@ class Chart
         $chart = $simpledom->element('chart', $this->attributes);
 
         foreach ($this->sets as $set){
-            $chart->element('set', $set['attributes']);
+            $chart->element('set', $set);
         }
 
         if( count($this->trendlines) ){
             $trendlines = $chart->element('trendLines');
             foreach ($this->trendlines as $trendline){
-                $trendlines->element('line', $trendline['attributes']);
+                $trendlines->element('line', $trendline);
             }
         }
 
