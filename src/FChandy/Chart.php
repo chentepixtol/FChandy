@@ -55,6 +55,12 @@ class Chart
         ), $attributes);
     }
 
+    /**
+     *
+     * @param int $startValue
+     * @param string $displayvalue
+     * @param array $attributes
+     */
     public function addTrendline($startValue, $displayvalue = '', array $attributes){
         $this->trendlines[] = array_merge(array(
             'startValue' => $startValue,
