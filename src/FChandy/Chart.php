@@ -36,6 +36,12 @@ class Chart
 
     /**
      *
+     * @var array
+     */
+    private $datasets = array();
+
+    /**
+     *
      * @param string $caption
      * @param string $xAxisName
      * @param string $yAxisName
@@ -47,6 +53,21 @@ class Chart
             'xAxisName' => $xAxisName,
             'yAxisName' => $yAxisName,
         ), $attributes);
+    }
+
+    /**
+     *
+     * @param string $seriesName
+     * @param array $values
+     * @param array $attributes
+     */
+    public function addDataset($seriesName, array $values, array $attributes = array()){
+        $this->datasets[] = array(
+            'sets' => $values,
+            'attributes' => array_merge(array(
+                'seriesName' => $seriesName,
+            ), $attributes)
+        );
     }
 
     /**
@@ -110,6 +131,13 @@ class Chart
             $categories = $chart->element('categories');
             foreach ($this->categories as $category){
                 $categories->element('category', $category);
+            }
+        }
+
+        foreach ($this->datasets as $dataset){
+            $datasetElement = $chart->element('dataset', $dataset['attributes']);
+            foreach( $dataset['sets'] as $value ){
+                $datasetElement->element('set', array('value' => $value));
             }
         }
 

@@ -56,5 +56,16 @@ class ChartTest extends BaseTest
                 $this->inline($chart->buildXml()));
     }
 
+    /**
+     * @test
+     */
+    public function datasets(){
+        $chart = new Chart();
+        $chart->addDataset("2012", array(1,2,3));
+        $chart->addDataset("2013", array(2,4,6));
+        $this->assertEquals('<?xml version="1.0"?><chart caption="" xAxisName="" yAxisName=""><dataset seriesName="2012"><set value="1"></set><set value="2"></set><set value="3"></set></dataset><dataset seriesName="2013"><set value="2"></set><set value="4"></set><set value="6"></set></dataset></chart>',
+                $this->inline($chart->buildXml()));
+    }
+
 }
 
