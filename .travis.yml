@@ -4,4 +4,7 @@ php:
   - 5.3
   - 5.4
 
+before_script:
+  - php composer.phar --quiet install 
+
 script: phpunit --coverage-text Test/

@@ -1,0 +1,17 @@
+{
+    "hash": "09b766367a081043d7df8b299877f730",
+    "packages": [
+        {
+            "package": "chentepixtol/simpledom",
+            "version": "0.9.0"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "dev",
+    "stability-flags": [
+
+    ]
+}
